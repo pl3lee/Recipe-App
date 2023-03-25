@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
 
   // if user does not exist
   if (!user) {
-    return res.json({ message: "User does not exist!" });
+    return res.json({ message: "User does not exist!", status: -2 });
   }
 
   // compare given password, with the hashed password in the database
@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
 
   // if password is invalid
   if (!isPasswordValid) {
-    return res.json({ message: "Incorrect username or password" });
+    return res.json({ message: "Incorrect username or password", status: -1 });
   }
 
   // create a new token
@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
   const token = jwt.sign({ id: user._id }, "secret");
 
   // returns the token and the user id
-  res.json({ token: token, userID: user._id });
+  res.json({ token: token, userID: user._id, status: 1 });
 });
 // remember to export the router
 export { router as userRouter };
