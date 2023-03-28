@@ -5,6 +5,7 @@ import cors from "cors";
 // database management system
 import mongoose from "mongoose";
 import { userRouter } from "./routes/users.js";
+import { recipesRouter } from "./routes/recipes.js";
 
 dotenv.config();
 // generate version of our API
@@ -17,6 +18,7 @@ app.use(cors());
 
 // now whatever endpoints we create in userRouter will automatically start with /auth
 app.use("/auth", userRouter);
+app.use("/recipes", recipesRouter);
 
 // put this after middlewares are applied and before listen
 // process.env is a available globally
