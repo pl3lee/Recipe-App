@@ -8,7 +8,8 @@ import { Recipe } from './create-recipe'
 import { Button, Typography } from '@mui/material'
 import { useGetUserID } from '@/hooks/useGetUserID'
 import { useContext } from 'react'
-
+import { getCookie } from 'cookies-next'
+import { AuthContext } from '@/stores/AuthContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,8 +18,9 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({recipes}) => {
-  const userID = useGetUserID();
-  // console.log(savedRecipes)
+  const { user, getSavedRecipesID, getSavedRecipes } = useContext(AuthContext)
+  const userID = user
+  
   const saveRecipe = async (recipeID: any) => {
     try {
       const res = await fetch('http://localhost:3001/recipes', {
@@ -39,7 +41,7 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
       <div>
         <Typography variant="h2">{recipe.name}</Typography>
       </div>
-      {/* <button onClick={() => saveRecipe(recipe._id)}>Save</button> */}
+      <button onClick={() => saveRecipe(recipe._id)}>Save</button>
       <div>
         <Typography variant="h3">Instructions</Typography>
         <Typography variant='body1'>{recipe.instructions}</Typography>
@@ -65,10 +67,6 @@ export const getServerSideProps: any = async () =>{
     method: 'GET',
   });
   const recipes = await res.json();
-  // const savedRecipesData = await fetch('http://localhost:3001/recipes/savedRecipes/id', {
-  //   method: 'GET'
-  // });
-  // const savedRecipes = await savedRecipesData.json();
   if (recipes) {
     return {
       props: { recipes },

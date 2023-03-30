@@ -49,10 +49,30 @@ const logout = () => {
   router.push("/auth")
 
 }
+const getSavedRecipesID = async () => {
+  const res = await fetch('http://localhost:3001/recipes/savedRecipes/id', {
+    method: 'GET',
+    headers: { "Content-Type": "application/json"},
+    body: JSON.stringify({userID: user})
+  });
+  const resData = await res.json();
+  return resData;
+}
+const getSavedRecipes = async () => {
+  const res = await fetch('http://localhost:3001/recipes/savedRecipes', {
+    method: 'GET',
+    headers: { "Content-Type": "application/json"},
+    body: JSON.stringify({userID: user})
+  });
+  const resData = await res.json();
+  return resData;
+}
 const auth: AuthContextInterface = {
   user,
   login,
-  logout
+  logout,
+  getSavedRecipesID,
+  getSavedRecipes
 }
 
 
