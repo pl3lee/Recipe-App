@@ -2,7 +2,7 @@ import { Inter } from '@next/font/google'
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import { Recipe } from './create-recipe'
 import { Button, Typography } from '@mui/material'
@@ -19,6 +19,7 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({recipes}) => {
   const { user, getSavedRecipesID, getSavedRecipes } = useContext(AuthContext)
+  const [savedRecipes, setSavedRecipes] = useState<any>([]);
   const userID = user
   
   const saveRecipe = async (recipeID: any) => {
@@ -33,6 +34,14 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
       console.log(err);
     }
   }
+  useEffect(() => {
+    const fetchSavedRecipes = async () => {
+      const savedRecipesData = await getSavedRecipes();
+      setSavedRecipes(savedRecipesData.savedRecipes);
+    };
+    fetchSavedRecipes();
+  }, []);
+  
   return (
     <>
     <Typography variant="h1">Recipes</Typography>
@@ -55,6 +64,8 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
         <Typography variant='body1'>{recipe.cookingTime}</Typography>
       </div>
     </li>))}
+
+    
     </ul>
     </>
       
