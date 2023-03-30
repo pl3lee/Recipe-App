@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserID } from '@/hooks/useGetUserID';
 import { useRouter } from 'next/router';
+import { getCookie } from 'cookies-next';
 
 export interface CreateRecipeProps {
 }
@@ -28,6 +29,7 @@ const CreateRecipe = (props: CreateRecipeProps) => {
     cookingTime: 0,
     userOwner: userID,
   });
+  const cookie = getCookie('access_token');
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
     // this automatically gets the name property from the input, and the value
@@ -50,7 +52,8 @@ const CreateRecipe = (props: CreateRecipeProps) => {
     try {
       const res = await fetch('http://localhost:3001/recipes', {
       method: 'POST',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json",
+      "authorization": `${cookie}`},
       body: JSON.stringify(recipe),
     });
     alert("recipe created")
