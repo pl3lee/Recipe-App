@@ -12,7 +12,7 @@ import { useGetUserID } from '@/hooks/useGetUserID';
 
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<string|null>(null);
   const router = useRouter()
  const userID = useGetUserID();
  useEffect(() => {
@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
   
 
 
-  const login = async (username: string, password: string) => {
+  const login = async (username: string, password: string): Promise<number> => {
     const data = { username, password }
     const res = await fetch('http://localhost:3001/auth/login', {
       method: 'POST',
@@ -35,18 +35,22 @@ export default function App({ Component, pageProps }: AppProps) {
 
     // we defined our own status codes in the backend
     if (resData.status === -2) {
-      alert("Username does not exist")
+      // alert("Username does not exist")
+      return -2;
     } else if (resData.status === -1) {
-      alert("Incorrect password")
+      // alert("Incorrect password")
+      return -1;
     } else if (!res.ok) {
-      alert("Something went wrong")
+      // alert("Something went wrong")
+      return -10;
     } else {
-      alert("Successfully logged in")
+      // alert("Successfully logged in")
       // we need to get the token and userID from the response, and set it in the cookies
       const { token, userID } = resData;
       setCookie("access_token", token)
       window.localStorage.setItem("userID", userID);
       setUser(userID)
+      return 1;
   }
 }
 // to logout, simply set access token to empty string and remove userID from local storage
