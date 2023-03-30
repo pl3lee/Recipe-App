@@ -17,11 +17,19 @@ const Login:React.FC = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     // this prevents refresh
     event.preventDefault();
-    login(username, password);
-    
-
+    const status = await login(username, password);
       // this redirects to homepage
-      router.push("/");
+      if (status == 1) {
+        router.push("/");
+      } else if (status == -2) {
+        alert("Username does not exist")
+      } else if (status == -1) {
+        alert("Incorrect password")
+      } else if (status == -10) {
+        alert("Something went wrong")
+      }
+      
+      
     }
 
   

@@ -14,40 +14,49 @@ import { AuthContext } from "@/stores/AuthContext";
 import { AuthContextInterface } from "@/interfaces/AuthContextInterface";
 
 export default function Navbar(props: any) {
-  const { user, logout } = useContext(AuthContext)
+  const { user, logout } = useContext(AuthContext);
   const [userID, setUserID] = useState(useGetUserID());
 
-  
   const loginRegister = (
-    <Button color="secondary" href="/auth">
+    <Button variant="text" component={Link} href="/auth" sx={{color: "white", fontSize:"2em", textTransform: "none"}}>
       Login/Register
     </Button>
   );
-  const logoutButton = <Button color="secondary" onClick={logout}>Logout</Button>
-  const auth = user ? logoutButton: loginRegister;
+  const logoutButton = (
+    <Button color="secondary" onClick={logout} sx={{color: "white", fontSize:"2em", textTransform: "none"}}>
+      Logout
+    </Button>
+  );
+  const auth = user ? logoutButton : loginRegister;
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    
       <AppBar position="static">
-        <Toolbar>
-          <Link href="/" component={NextLink} variant="body2" color="secondary">Home</Link>
-          <Link
+        <Toolbar sx={{ justifyContent: "center", gap:"10%", padding:"3vh"}}>
+            <Button href="/" component={Link} variant="text" sx={{color: "white", fontSize:"2em", textTransform: "none"}}>
+            Home
+          </Button>
+          {user && <Button
             href="/create-recipe"
-            component={NextLink}
-            variant="body2"
-            color="secondary"
-          >Create Recipe</Link>
-          {user && <Link
-            href="/saved-recipes"
-            component={NextLink}
-            variant="body2"
-            color="secondary"
-          >Saved Recipes</Link>}
-        {auth}
+            component={Link}
+            variant="text"
+            sx={{color: "white", fontSize:"2em", textTransform: "none"}}
+          >
+            Create Recipe
+          </Button>}
+          {user && (
+            <Button
+              href="/saved-recipes"
+              component={Link}
+              variant="text"
+              sx={{color: "white", fontSize:"2em", textTransform: "none"}}
+            >
+              Saved Recipes
+            </Button>
+          )}
+          {auth}
         </Toolbar>
       </AppBar>
-    </Box>
+    
   );
 }
-
-
