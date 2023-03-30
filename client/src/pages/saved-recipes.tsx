@@ -1,23 +1,27 @@
 import { AuthContext } from '@/stores/AuthContext';
 import { Typography } from '@mui/material';
 import * as React from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export interface SavedRecipesProps {
 }
 
 const SavedRecipes = (props: SavedRecipesProps) => {
-  const { user, getSavedRecipes } = React.useContext(AuthContext)
-  const [savedRecipes, setSavedRecipes] = React.useState<any>([]);
-  const userID = user
+  const { user, getSavedRecipes } = useContext(AuthContext)
+  const [savedRecipes, setSavedRecipes] = useState<any>([]);
   
-  React.useEffect(() => {
-    const fetchSavedRecipes = async () => {
-      const savedRecipesData = await getSavedRecipes();
-      setSavedRecipes(savedRecipesData.savedRecipes);
-    };
-    fetchSavedRecipes();
-  }, [savedRecipes]);
- 
+  const fetchSavedRecipes = async () => {
+    const savedRecipesData = await getSavedRecipes();
+    setSavedRecipes(savedRecipesData.savedRecipes);
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchSavedRecipes();
+    }
+  }, [user]);
+
+  
   return (
     <>
     <Typography variant="h1">Saved Recipes</Typography>
