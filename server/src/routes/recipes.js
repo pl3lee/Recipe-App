@@ -2,6 +2,7 @@ import { RecipeModel } from "../models/Recipes.js";
 import express from "express";
 import mongoose from "mongoose";
 import { UserModel } from "../models/Users.js";
+import { verifyToken } from "./users.js";
 
 const router = express.Router();
 
@@ -17,7 +18,8 @@ router.get("/", async (req, res) => {
 });
 
 // Adds a recipe
-router.post("/", async (req, res) => {
+// pass verifyToken middleware right before the callback function
+router.post("/", verifyToken, async (req, res) => {
   const recipe = new RecipeModel(req.body);
   try {
     const response = await recipe.save();
@@ -28,7 +30,7 @@ router.post("/", async (req, res) => {
 });
 
 // saves a recipe to a userID
-router.put("/", async (req, res) => {
+router.put("/", verifyToken, async (req, res) => {
   try {
     // finds the recipe and user by their IDs
     const recipe = await RecipeModel.findById(req.body.recipeID);

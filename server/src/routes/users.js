@@ -62,3 +62,21 @@ router.post("/login", async (req, res) => {
 });
 // remember to export the router
 export { router as userRouter };
+
+// we have to create a middleware to verify that the access token is valid
+// this middleware is run before every API request
+export const verifyToken = (req, res, next) => {
+  // every request header field has authorization
+  const token = req.headers.authorization;
+  if (token) {
+    jwt.verify(token, "secret", (err) => {
+      // user is not authorized
+      if (err) return res.sendStatus(403);
+      // no errors, user can continue with request
+      next();
+    });
+  } else {
+    // no token is sent
+    res.sendStatus(401);
+  }
+};
