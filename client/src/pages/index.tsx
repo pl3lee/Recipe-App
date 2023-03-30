@@ -18,7 +18,7 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({recipes}) => {
-  const { user, getSavedRecipesID, getSavedRecipes } = useContext(AuthContext)
+  const { user, getSavedRecipesID } = useContext(AuthContext)
   const [savedRecipes, setSavedRecipes] = useState<any>([]);
   const userID = user
   
