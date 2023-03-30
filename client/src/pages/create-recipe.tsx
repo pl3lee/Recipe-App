@@ -70,7 +70,7 @@ const CreateRecipe = (props: CreateRecipeProps) => {
         <Input id="name" type="text" name="name" required onChange={handleChange}/>
       </FormControl>
       <FormControl variant="standard">
-        {/* <button onClick={addIngredient}>Add Ingredient</button> */}
+        <button onClick={addIngredient}>Add Ingredient</button>
         {recipe.ingredients.map((ingredient, index) => {
           return (
           <Input key={index} type="text" name="ingredients" value={ingredient} onChange={(event) => handleIngredientChange(event, index)}/>)
@@ -88,9 +88,9 @@ const CreateRecipe = (props: CreateRecipeProps) => {
         <InputLabel htmlFor="cookingTime">Cooking time</InputLabel>
         <Input id="cookingTime" type="number" name="cookingTime" required onChange={handleChange}/>
       </FormControl>
-      {/* <Button type="submit" variant="contained" color="primary">
+      <Button type="submit" variant="contained" color="primary">
         Submit
-      </Button> */}
+      </Button>
       </>
     </Box>
     </>

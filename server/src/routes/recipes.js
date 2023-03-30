@@ -43,9 +43,11 @@ router.put("/", async (req, res) => {
 });
 
 // gets all saved recipes IDs for a user
-router.get("/savedRecipes/ids", async (req, res) => {
+// we have to use params instead of using body for GET requests
+router.get("/savedRecipes/ids/:userID", async (req, res) => {
   try {
-    const user = await UserModel.findById(req.body.userID);
+    //instead of req.body we do req.params since we're getting the userID from the URL
+    const user = await UserModel.findById(req.params.userID);
     // added ? since this might be null (if the user doesn't exist)
     res.json({ savedRecipes: user?.savedRecipes });
   } catch (err) {
@@ -54,9 +56,9 @@ router.get("/savedRecipes/ids", async (req, res) => {
 });
 
 // gets all saved recipes for a user
-router.get("/savedRecipes", async (req, res) => {
+router.get("/savedRecipes/:userID", async (req, res) => {
   try {
-    const user = await UserModel.findById(req.body.userID);
+    const user = await UserModel.findById(req.params.userID);
     // gets all recipes where their ID is in the user's savedRecipes array
     const savedRecipes = await RecipeModel.find({
       _id: { $in: user.savedRecipes },

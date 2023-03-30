@@ -29,6 +29,8 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify({recipeID, userID}),
     });
+    // just to make the page rerender
+    setSavedRecipes([])
     alert("recipe saved")
     } catch (err) {
       console.log(err);
@@ -36,12 +38,12 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
   }
   useEffect(() => {
     const fetchSavedRecipes = async () => {
-      const savedRecipesData = await getSavedRecipes();
+      const savedRecipesData = await getSavedRecipesID();
       setSavedRecipes(savedRecipesData.savedRecipes);
     };
     fetchSavedRecipes();
-  }, []);
-  
+  }, [savedRecipes]);
+  // console.log(savedRecipes)
   return (
     <>
     <Typography variant="h1">Recipes</Typography>
@@ -50,7 +52,7 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
       <div>
         <Typography variant="h2">{recipe.name}</Typography>
       </div>
-      <button onClick={() => saveRecipe(recipe._id)}>Save</button>
+      {savedRecipes.includes(recipe._id) ? <div>Saved</div> : <button onClick={() => saveRecipe(recipe._id)}>Save</button>}
       <div>
         <Typography variant="h3">Instructions</Typography>
         <Typography variant='body1'>{recipe.instructions}</Typography>

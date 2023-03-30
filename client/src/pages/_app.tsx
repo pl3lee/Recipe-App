@@ -50,7 +50,7 @@ const logout = () => {
 
 }
 const getSavedRecipesID = async () => {
-  const res = await fetch('http://localhost:3001/recipes/savedRecipes/id', {
+  const res = await fetch(`http://localhost:3001/recipes/savedRecipes/ids/${user}`, {
     method: 'GET',
     headers: { "Content-Type": "application/json"},
   });
@@ -58,7 +58,7 @@ const getSavedRecipesID = async () => {
   return resData;
 }
 const getSavedRecipes = async () => {
-  const res = await fetch('http://localhost:3001/recipes/savedRecipes', {
+  const res = await fetch(`http://localhost:3001/recipes/savedRecipes/${user}`, {
     method: 'GET',
     headers: { "Content-Type": "application/json"},
   });
