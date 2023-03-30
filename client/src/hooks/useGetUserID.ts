@@ -1,4 +1,7 @@
 
 export const useGetUserID = () => {
-  return window.localStorage.getItem("userID");
+  if (typeof window !== "undefined") {
+    return window.localStorage.getItem("userID");
+  }
+  return null;
 }

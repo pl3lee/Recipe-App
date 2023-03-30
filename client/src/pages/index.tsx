@@ -1,4 +1,3 @@
-import Navbar from '@/components/Navbar'
 import { Inter } from '@next/font/google'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -8,11 +7,13 @@ import { GetServerSideProps } from 'next'
 import { Recipe } from './create-recipe'
 import { Button, Typography } from '@mui/material'
 import { useGetUserID } from '@/hooks/useGetUserID'
+import { useContext } from 'react'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 interface HomeProps {
-  recipes: any;
+  recipes?: any;
 }
 
 const Home: React.FC<HomeProps> = ({recipes}) => {
@@ -38,7 +39,7 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
       <div>
         <Typography variant="h2">{recipe.name}</Typography>
       </div>
-      <Button onClick={() => saveRecipe(recipe._id)}>Save</Button>
+      {/* <button onClick={() => saveRecipe(recipe._id)}>Save</button> */}
       <div>
         <Typography variant="h3">Instructions</Typography>
         <Typography variant='body1'>{recipe.instructions}</Typography>
