@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { useCookies } from "react-cookie";
 import { useState } from "react";
 import { getCookie, setCookie } from "cookies-next";
 import { useGetUserID } from "@/hooks/useGetUserID";
@@ -38,12 +37,12 @@ export default function Navbar(props: any) {
             variant="body2"
             color="secondary"
           >Create Recipe</Link>
-          <Link
+          {user && <Link
             href="/saved-recipes"
             component={NextLink}
             variant="body2"
             color="secondary"
-          >Saved Recipes</Link>
+          >Saved Recipes</Link>}
         {auth}
         </Toolbar>
       </AppBar>

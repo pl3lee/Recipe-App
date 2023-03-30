@@ -32,20 +32,24 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
       body: JSON.stringify({recipeID, userID}),
     });
     // just to make the page rerender
-    setSavedRecipes([])
-    alert("recipe saved")
+    setSavedRecipes((prev) => [...prev, recipeID] )
     } catch (err) {
       console.log(err);
     }
   }
+  const fetchSavedRecipes = async () => {
+    const savedRecipesData = await getSavedRecipesID();
+    setSavedRecipes(savedRecipesData.savedRecipes);
+  };
+
   useEffect(() => {
-    const fetchSavedRecipes = async () => {
-      const savedRecipesData = await getSavedRecipesID();
-      setSavedRecipes(savedRecipesData.savedRecipes);
-    };
-    fetchSavedRecipes();
-  }, [savedRecipes]);
-  // console.log(savedRecipes)
+    if (user) {
+      fetchSavedRecipes();
+    }
+  }, [user]);
+  
+
+
   return (
     <>
     <Typography variant="h1">Recipes</Typography>
@@ -54,7 +58,7 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
       <div>
         <Typography variant="h2">{recipe.name}</Typography>
       </div>
-      {savedRecipes.includes(recipe._id) ? <div>Saved</div> : <button onClick={() => saveRecipe(recipe._id)}>Save</button>}
+      {user && <Button disabled = {savedRecipes.includes(recipe._id)} onClick={() => saveRecipe(recipe._id)}>{savedRecipes.includes(recipe._id) ? "Saved" : "Save"}</Button>}
       <div>
         <Typography variant="h3">Instructions</Typography>
         <Typography variant='body1'>{recipe.instructions}</Typography>

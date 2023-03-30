@@ -2,9 +2,10 @@ import Layout from '@/components/Layout'
 import type { AppProps } from 'next/app'
 import { AuthContext } from '@/stores/AuthContext'
 import { deleteCookie, setCookie } from 'cookies-next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthContextInterface } from '@/interfaces/AuthContextInterface';
 import { useRouter } from 'next/router';
+import { useGetUserID } from '@/hooks/useGetUserID';
 
 
 
@@ -13,6 +14,13 @@ import { useRouter } from 'next/router';
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState(null);
   const router = useRouter()
+ const userID = useGetUserID();
+ useEffect(() => {
+  if (userID) {
+    setUser(userID)
+  }
+ }, [])
+  
 
 
   const login = async (username: string, password: string) => {

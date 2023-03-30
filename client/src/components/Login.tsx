@@ -1,7 +1,6 @@
 import { Box, Typography, FormControl, InputLabel, Input, Button } from "@mui/material";
 import { useState } from "react";
 import Form from "./Form";
-import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router";
 import { AuthContext } from "@/stores/AuthContext";
 import { useContext } from "react";
@@ -12,8 +11,7 @@ const Login:React.FC = () => {
   // we use the router to redirect
   const router = useRouter();
 
-  // since we only need the setCookies function
-  const [_, setCookies] = useCookies(["access_token"])
+  
   const { login } = useContext(AuthContext);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
