@@ -23,7 +23,7 @@ const CreateRecipe = (props: CreateRecipeProps) => {
   const userID = useGetUserID();
   const [recipe, setRecipe] = useState<Recipe>({
     name: '',
-    ingredients: [],
+    ingredients: [""],
     instructions: "",
     imageURL: "",
     cookingTime: 0,
@@ -70,14 +70,12 @@ const CreateRecipe = (props: CreateRecipeProps) => {
   return (
     <Container>
     <Typography variant='h2' textAlign="center">Create Recipe</Typography>
-    <Stack component="form" autoComplete="off" onSubmit={onSubmit}>
+    <Stack component="form" autoComplete="off" onSubmit={onSubmit} gap={2}>
       {/* we put the name property here so we can use it in handleChange */}
       <FormControl variant="standard">
         <InputLabel htmlFor="name">Name</InputLabel>
         <Input id="name" type="text" name="name" required onChange={handleChange}/>
       </FormControl>
-      
-        <Button onClick={addIngredient}>Add Ingredient</Button>
         {recipe.ingredients.map((ingredient, index) => {
           return (
             <FormControl variant="standard" key={index}>
@@ -85,10 +83,10 @@ const CreateRecipe = (props: CreateRecipeProps) => {
           <Input  type="text" name="ingredients" value={ingredient} onChange={(event) => handleIngredientChange(event, index)}/>
           </FormControl>)
         })}
+        <Button onClick={addIngredient}>Add Ingredient</Button>
      
       <FormControl variant="standard">
-        <InputLabel htmlFor="instructions">Instructions</InputLabel>
-        <TextareaAutosize id="instructions" name="instructions" required placeholder='Instructions' onChange={handleChange}/>
+        <TextareaAutosize aria-label="instructions" minRows={3} id="instructions" name="instructions" required placeholder='Enter instructions' onChange={handleChange}/>
       </FormControl>
       <FormControl variant="standard">
         <InputLabel htmlFor="imageURL">Image URL</InputLabel>
