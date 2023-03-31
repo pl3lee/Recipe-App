@@ -51,7 +51,14 @@ export default function RecipeCard(props) {
         alt={props.recipe.name}
       />
       <CardContent>
-      <Typography paragraph>Cooking Time: {props.recipe.cookingTime} minutes</Typography>
+      <Typography variant='h5'>Cooking Time:</Typography>
+      <Typography paragraph> {props.recipe.cookingTime} minutes</Typography>
+      <Typography paragraph>Ingredients:</Typography>
+      <ul>
+        {props.recipe.ingredients.map((ingredient, index) => (
+          <li key={index}>{ingredient[0].toUpperCase() + ingredient.slice(1)}</li>
+        ))}
+      </ul>
       </CardContent>
       <CardActions disableSpacing>
         {user && <IconButton color={(savedRecipesID.includes(props.recipe._id)) ? "error" : "default"}  onClick={() => saveRecipe(props.recipe._id)}><FavoriteIcon/></IconButton>}
