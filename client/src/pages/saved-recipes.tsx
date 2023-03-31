@@ -8,7 +8,7 @@ export interface SavedRecipesProps {
 }
 
 const SavedRecipes = (props: SavedRecipesProps) => {
-  const { user, getSavedRecipesID, getSavedRecipes, saveRecipe, fetchSavedRecipes, savedRecipes, savedRecipesID, getRecipes, recipes } = useContext(AuthContext)
+  const { user, fetchSavedRecipes, savedRecipes, getRecipes } = useContext(AuthContext)
   
   
 
