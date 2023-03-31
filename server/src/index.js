@@ -24,4 +24,7 @@ app.use("/recipes", recipesRouter);
 // process.env is a available globally
 mongoose.connect(process.env.MONGOOSE_URL);
 
-app.listen(3001, () => console.log("Server is running on port 3001"));
+// for heroku
+app.listen(process.env.PORT || 3001, () =>
+  console.log("Server is running on port 3001")
+);
