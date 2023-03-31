@@ -42,7 +42,7 @@ export default function RecipeCard(props: RecipeCardProps) {
   };
 
   return (
-    <Card sx={{ width: "35vw" }}>
+    <Card sx={{ width: "60vw" }}>
       <CardHeader title={props.recipe.name} sx={{ textAlign: "center" }} />
       <CardMedia
         component="img"

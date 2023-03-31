@@ -14,7 +14,7 @@ export default function Navbar() {
       variant="text"
       component={Link}
       href="/auth"
-      sx={{ color: "white", fontSize: "2em", textTransform: "none" }}
+      sx={{ color: "white", fontSize: "max(24px, 2vw)", textTransform: "none" }}
     >
       Login/Register
     </Button>
@@ -23,7 +23,7 @@ export default function Navbar() {
     <Button
       color="secondary"
       onClick={logout}
-      sx={{ color: "white", fontSize: "2em", textTransform: "none" }}
+      sx={{ color: "white", fontSize: "max(24px, 2vw)", textTransform: "none" }}
     >
       Logout
     </Button>
@@ -37,7 +37,11 @@ export default function Navbar() {
           href="/"
           component={Link}
           variant="text"
-          sx={{ color: "white", fontSize: "2em", textTransform: "none" }}
+          sx={{
+            color: "white",
+            fontSize: "max(24px, 2vw)",
+            textTransform: "none",
+          }}
         >
           Home
         </Button>
@@ -46,7 +50,11 @@ export default function Navbar() {
             href="/create-recipe"
             component={Link}
             variant="text"
-            sx={{ color: "white", fontSize: "2em", textTransform: "none" }}
+            sx={{
+              color: "white",
+              fontSize: "max(24px, 2vw)",
+              textTransform: "none",
+            }}
           >
             Create Recipe
           </Button>
@@ -56,7 +64,11 @@ export default function Navbar() {
             href="/saved-recipes"
             component={Link}
             variant="text"
-            sx={{ color: "white", fontSize: "2em", textTransform: "none" }}
+            sx={{
+              color: "white",
+              fontSize: "max(24px, 2vw)",
+              textTransform: "none",
+            }}
           >
             Saved Recipes
           </Button>
