@@ -10,6 +10,8 @@ import { useGetUserID } from '@/hooks/useGetUserID'
 import { useContext } from 'react'
 import { getCookie } from 'cookies-next'
 import { AuthContext } from '@/stores/AuthContext'
+import RecipeCard from '@/components/RecipeCard'
+import { Container, Stack } from '@mui/system'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -51,31 +53,12 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
 
 
   return (
-    <>
-    <Typography variant="h1">Recipes</Typography>
-    <ul>
-    {recipes.map((recipe: any) => (<li key={recipe._id}>
-      <div>
-        <Typography variant="h2">{recipe.name}</Typography>
-      </div>
-      {user && <Button disabled = {savedRecipes.includes(recipe._id)} onClick={() => saveRecipe(recipe._id)}>{savedRecipes.includes(recipe._id) ? "Saved" : "Save"}</Button>}
-      <div>
-        <Typography variant="h3">Instructions</Typography>
-        <Typography variant='body1'>{recipe.instructions}</Typography>
-      </div>
-      <div>
-        <Typography variant="h3">Image</Typography>
-        <img src={recipe.imageURL} alt={recipe.name}/>
-      </div>
-      <div>
-        <Typography variant="h3">Cooking Time (In minutes)</Typography>
-        <Typography variant='body1'>{recipe.cookingTime}</Typography>
-      </div>
-    </li>))}
-
-    
-    </ul>
-    </>
+    <Stack sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+    <Typography variant="h1" sx={{textAlign: "center"}}>Recipes</Typography>
+    <Stack spacing={5}>{recipes.map((recipe: any) => (
+      <Container key={recipe._id}><RecipeCard recipe={recipe} saveRecipe={saveRecipe} savedRecipes={savedRecipes} user={user}/></Container>
+ ))}</Stack>
+    </Stack>
       
   )
 }
