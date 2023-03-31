@@ -15,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<string|null>(null);
   const [savedRecipes, setSavedRecipes] = useState<any>([]);
   const [savedRecipesID, setSavedRecipesID] = useState<any>([]);
+  const [recipes, setRecipes] = useState<any>([]);
   const router = useRouter()
   const cookie = getCookie('access_token');
  const userID = useGetUserID();
@@ -64,6 +65,18 @@ const logout = () => {
   router.push("/auth")
 
 }
+const getRecipes = async () => {
+  try {
+    const res = await fetch('http://localhost:3001/recipes', {
+      method: 'GET',
+    });
+    const resData = await res.json();
+    setRecipes(resData);
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 const getSavedRecipesID = async () => {
   const res = await fetch(`http://localhost:3001/recipes/savedRecipes/ids/${user}`, {
     method: 'GET',
@@ -114,6 +127,8 @@ const auth: AuthContextInterface = {
   user,
   login,
   logout,
+  recipes,
+  getRecipes,
   getSavedRecipesID,
   getSavedRecipes,
   fetchSavedRecipes,

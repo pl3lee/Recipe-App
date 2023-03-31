@@ -19,8 +19,8 @@ interface HomeProps {
   recipes?: any;
 }
 
-const Home: React.FC<HomeProps> = ({recipes}) => {
-  const { user, getSavedRecipesID, getSavedRecipes, saveRecipe, fetchSavedRecipes, savedRecipes, savedRecipesID } = useContext(AuthContext)
+const Home: React.FC<HomeProps> = () => {
+  const { user, getSavedRecipesID, getSavedRecipes, saveRecipe, fetchSavedRecipes, savedRecipes, savedRecipesID, getRecipes, recipes } = useContext(AuthContext)
   
   const userID = user
   
@@ -30,12 +30,16 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
       fetchSavedRecipes();
     }
   }, [user]);
+
+  useEffect(() => {
+    getRecipes();
+  }, [])
   
 
 
   return (
     <Stack sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-    <Typography variant="h1" sx={{textAlign: "center"}}>Recipes</Typography>
+    <Typography variant="h2" sx={{textAlign: "center"}}>Recipes</Typography>
     <Stack spacing={5}>{recipes.map((recipe: any) => (
       <Container key={recipe._id}><RecipeCard recipe={recipe}/></Container>
  ))}</Stack>
@@ -44,23 +48,23 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
   )
 }
 
-export const getServerSideProps: any = async () =>{
-  try {
-  const res = await fetch('http://localhost:3001/recipes', {
-    method: 'GET',
-  });
-  const recipes = await res.json();
-  if (recipes) {
-    return {
-      props: { recipes },
-    }
-  }
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {recipes: []},
-    }
-  }
-}
+// export const getServerSideProps: any = async () =>{
+//   try {
+//   const res = await fetch('http://localhost:3001/recipes', {
+//     method: 'GET',
+//   });
+//   const recipes = await res.json();
+//   if (recipes) {
+//     return {
+//       props: { recipes },
+//     }
+//   }
+//   } catch (err) {
+//     console.log(err);
+//     return {
+//       props: {recipes: []},
+//     }
+//   }
+// }
 
 export default Home
