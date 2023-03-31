@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import type { AppProps } from 'next/app'
 import { AuthContext } from '@/stores/AuthContext'
-import { deleteCookie, setCookie } from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { AuthContextInterface } from '@/interfaces/AuthContextInterface';
 import { useRouter } from 'next/router';
@@ -13,13 +13,16 @@ import { useGetUserID } from '@/hooks/useGetUserID';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<string|null>(null);
+  const [savedRecipes, setSavedRecipes] = useState<any>([]);
+  const [savedRecipesID, setSavedRecipesID] = useState<any>([]);
   const router = useRouter()
+  const cookie = getCookie('access_token');
  const userID = useGetUserID();
- useEffect(() => {
-  if (userID) {
-    setUser(userID)
-  }
- }, [])
+  useEffect(() => {
+    if (userID) {
+      setUser(userID)
+    }
+  }, [])
   
 
 
@@ -77,12 +80,37 @@ const getSavedRecipes = async () => {
   const resData = await res.json();
   return resData;
 }
+const fetchSavedRecipes = async () => {
+  const savedRecipesData = await getSavedRecipes();
+  setSavedRecipes(savedRecipesData.savedRecipes);
+  const savedRecipesIDData = await getSavedRecipesID();
+  setSavedRecipes(savedRecipesIDData.savedRecipes)
+};
+const saveRecipe = async (recipeID: any) => {
+  try {
+    const res = await fetch('http://localhost:3001/recipes', {
+    method: 'PUT',
+    headers: { "Content-Type": "application/json",
+              "authorization": `${cookie}`},
+    body: JSON.stringify({recipeID, userID}),
+  });
+  // just to make the page rerender
+  // setSavedRecipes((prev) => [...prev, recipeID] )
+  fetchSavedRecipes();
+  } catch (err) {
+    console.log(err);
+  }
+}
 const auth: AuthContextInterface = {
   user,
   login,
   logout,
   getSavedRecipesID,
-  getSavedRecipes
+  getSavedRecipes,
+  fetchSavedRecipes,
+  saveRecipe,
+  savedRecipes,
+  savedRecipesID
 }
 
 

@@ -20,29 +20,32 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({recipes}) => {
-  const { user, getSavedRecipesID } = useContext(AuthContext)
-  const [savedRecipes, setSavedRecipes] = useState<any>([]);
-  const userID = user
-  const cookie = getCookie('access_token');
+  const { user, getSavedRecipesID, getSavedRecipes, saveRecipe, fetchSavedRecipes, savedRecipes, savedRecipesID } = useContext(AuthContext)
   
-  const saveRecipe = async (recipeID: any) => {
-    try {
-      const res = await fetch('http://localhost:3001/recipes', {
-      method: 'PUT',
-      headers: { "Content-Type": "application/json",
-                "authorization": `${cookie}`},
-      body: JSON.stringify({recipeID, userID}),
-    });
-    // just to make the page rerender
-    setSavedRecipes((prev) => [...prev, recipeID] )
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  const fetchSavedRecipes = async () => {
-    const savedRecipesData = await getSavedRecipesID();
-    setSavedRecipes(savedRecipesData.savedRecipes);
-  };
+  const userID = user
+  
+  
+  // const saveRecipe = async (recipeID: any) => {
+  //   try {
+  //     const res = await fetch('http://localhost:3001/recipes', {
+  //     method: 'PUT',
+  //     headers: { "Content-Type": "application/json",
+  //               "authorization": `${cookie}`},
+  //     body: JSON.stringify({recipeID, userID}),
+  //   });
+  //   // just to make the page rerender
+  //   // setSavedRecipes((prev) => [...prev, recipeID] )
+  //   fetchSavedRecipes();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  // const fetchSavedRecipes = async () => {
+  //   const savedRecipesData = await getSavedRecipes();
+  //   setSavedRecipes(savedRecipesData.savedRecipes);
+  //   const savedRecipesIDData = await getSavedRecipesID();
+  //   setSavedRecipes(savedRecipesIDData.savedRecipes)
+  // };
 
   useEffect(() => {
     if (user) {
