@@ -48,23 +48,4 @@ const Home: React.FC<HomeProps> = () => {
   )
 }
 
-// export const getServerSideProps: any = async () =>{
-//   try {
-//   const res = await fetch('http://localhost:3001/recipes', {
-//     method: 'GET',
-//   });
-//   const recipes = await res.json();
-//   if (recipes) {
-//     return {
-//       props: { recipes },
-//     }
-//   }
-//   } catch (err) {
-//     console.log(err);
-//     return {
-//       props: {recipes: []},
-//     }
-//   }
-// }
-
 export default Home
