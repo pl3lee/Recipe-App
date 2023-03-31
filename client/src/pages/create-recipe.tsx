@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Input, InputLabel, TextareaAutosize, Typography } from '@mui/material';
+import { Box, Button, Container, FormControl, Input, InputLabel, Stack, TextareaAutosize, Typography } from '@mui/material';
 import { title } from 'process';
 import * as React from 'react';
 import { useState } from 'react';
@@ -49,12 +49,17 @@ const CreateRecipe = (props: CreateRecipeProps) => {
   }
   const onSubmit = async (event: any) => {
     event.preventDefault();
+    const filteredIngredients = recipe.ingredients.filter((ingredient) => ingredient.trim() !== '');
+    const newRecipe = { ...recipe, ingredients: filteredIngredients }
+    setRecipe(newRecipe)
+  
     try {
+      console.log(newRecipe)
       const res = await fetch('http://localhost:3001/recipes', {
       method: 'POST',
       headers: { "Content-Type": "application/json",
       "authorization": `${cookie}`},
-      body: JSON.stringify(recipe),
+      body: JSON.stringify(newRecipe),
     });
     alert("recipe created")
     router.push("/");
@@ -63,22 +68,24 @@ const CreateRecipe = (props: CreateRecipeProps) => {
     }
   }
   return (
-    <>
-    <Typography variant='h2'>Create Recipe</Typography>
-    <Box component="form" autoComplete="off" onSubmit={onSubmit}>
-      <>
+    <Container>
+    <Typography variant='h2' textAlign="center">Create Recipe</Typography>
+    <Stack component="form" autoComplete="off" onSubmit={onSubmit}>
       {/* we put the name property here so we can use it in handleChange */}
       <FormControl variant="standard">
         <InputLabel htmlFor="name">Name</InputLabel>
         <Input id="name" type="text" name="name" required onChange={handleChange}/>
       </FormControl>
-      <FormControl variant="standard">
-        <button onClick={addIngredient}>Add Ingredient</button>
+      
+        <Button onClick={addIngredient}>Add Ingredient</Button>
         {recipe.ingredients.map((ingredient, index) => {
           return (
-          <Input key={index} type="text" name="ingredients" value={ingredient} onChange={(event) => handleIngredientChange(event, index)}/>)
+            <FormControl variant="standard" key={index}>
+              <InputLabel htmlFor={`ingredient-${index}`}>{`Ingredient ${index + 1}`}</InputLabel>
+          <Input  type="text" name="ingredients" value={ingredient} onChange={(event) => handleIngredientChange(event, index)}/>
+          </FormControl>)
         })}
-      </FormControl>
+     
       <FormControl variant="standard">
         <InputLabel htmlFor="instructions">Instructions</InputLabel>
         <TextareaAutosize id="instructions" name="instructions" required placeholder='Instructions' onChange={handleChange}/>
@@ -94,9 +101,8 @@ const CreateRecipe = (props: CreateRecipeProps) => {
       <Button type="submit" variant="contained" color="primary">
         Submit
       </Button>
-      </>
-    </Box>
-    </>
+    </Stack>
+    </Container>
   );
 }
 
