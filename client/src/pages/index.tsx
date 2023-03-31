@@ -24,28 +24,6 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
   
   const userID = user
   
-  
-  // const saveRecipe = async (recipeID: any) => {
-  //   try {
-  //     const res = await fetch('http://localhost:3001/recipes', {
-  //     method: 'PUT',
-  //     headers: { "Content-Type": "application/json",
-  //               "authorization": `${cookie}`},
-  //     body: JSON.stringify({recipeID, userID}),
-  //   });
-  //   // just to make the page rerender
-  //   // setSavedRecipes((prev) => [...prev, recipeID] )
-  //   fetchSavedRecipes();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-  // const fetchSavedRecipes = async () => {
-  //   const savedRecipesData = await getSavedRecipes();
-  //   setSavedRecipes(savedRecipesData.savedRecipes);
-  //   const savedRecipesIDData = await getSavedRecipesID();
-  //   setSavedRecipes(savedRecipesIDData.savedRecipes)
-  // };
 
   useEffect(() => {
     if (user) {
@@ -59,7 +37,7 @@ const Home: React.FC<HomeProps> = ({recipes}) => {
     <Stack sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
     <Typography variant="h1" sx={{textAlign: "center"}}>Recipes</Typography>
     <Stack spacing={5}>{recipes.map((recipe: any) => (
-      <Container key={recipe._id}><RecipeCard recipe={recipe} saveRecipe={saveRecipe} savedRecipes={savedRecipes} user={user}/></Container>
+      <Container key={recipe._id}><RecipeCard recipe={recipe}/></Container>
  ))}</Stack>
     </Stack>
       

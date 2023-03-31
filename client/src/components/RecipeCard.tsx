@@ -13,6 +13,8 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useContext } from 'react';
+import { AuthContext } from '@/stores/AuthContext';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -31,6 +33,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export default function RecipeCard(props) {
   const [expanded, setExpanded] = React.useState(false);
+  const { user, savedRecipes, savedRecipesID, saveRecipe} = useContext(AuthContext);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -51,7 +54,7 @@ export default function RecipeCard(props) {
       <Typography paragraph>Cooking Time: {props.recipe.cookingTime} minutes</Typography>
       </CardContent>
       <CardActions disableSpacing>
-        {props.user && <IconButton color={(props.savedRecipes.includes(props.recipe._id)) ? "error" : "default"}  onClick={() => props.saveRecipe(props.recipe._id)}><FavoriteIcon/></IconButton>}
+        {user && <IconButton color={(savedRecipesID.includes(props.recipe._id)) ? "error" : "default"}  onClick={() => saveRecipe(props.recipe._id)}><FavoriteIcon/></IconButton>}
         {/* <IconButton color='error' disabled="true"><FavoriteIcon/></IconButton> */}
         {/* disabled = {props.savedRecipes.includes(props.recipe._id)} */}
         <ExpandMore

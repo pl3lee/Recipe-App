@@ -84,18 +84,27 @@ const fetchSavedRecipes = async () => {
   const savedRecipesData = await getSavedRecipes();
   setSavedRecipes(savedRecipesData.savedRecipes);
   const savedRecipesIDData = await getSavedRecipesID();
-  setSavedRecipes(savedRecipesIDData.savedRecipes)
+  console.log(savedRecipesIDData.savedRecipes)
+  setSavedRecipesID(savedRecipesIDData.savedRecipes);
 };
+
 const saveRecipe = async (recipeID: any) => {
   try {
-    const res = await fetch('http://localhost:3001/recipes', {
+    if (savedRecipesID.includes(recipeID)) {
+      const res = await fetch(`http://localhost:3001/recipes/savedRecipes/${user}/${recipeID}`, {
+        method: 'DELETE',
+        headers: { "Content-Type": "application/json",
+                  "authorization": `${cookie}`},
+      });
+    } else {
+      const res = await fetch('http://localhost:3001/recipes', {
     method: 'PUT',
     headers: { "Content-Type": "application/json",
               "authorization": `${cookie}`},
     body: JSON.stringify({recipeID, userID}),
   });
+    }
   // just to make the page rerender
-  // setSavedRecipes((prev) => [...prev, recipeID] )
   fetchSavedRecipes();
   } catch (err) {
     console.log(err);
