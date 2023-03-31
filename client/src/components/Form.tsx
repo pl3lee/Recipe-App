@@ -22,7 +22,7 @@ const Form:React.FC<FormProps> = ({title, username, setUsername, password, setPa
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography variant="h2">
           {title}
         </Typography>
         <Box component="form" onSubmit={onSubmit} sx={{ mt: 1 }}>
