@@ -3,14 +3,13 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
-    <Navbar></Navbar>
-    {children}
+      <Navbar></Navbar>
+      {children}
     </>
-  )
-}
+  );
+};
 
 export default Layout;

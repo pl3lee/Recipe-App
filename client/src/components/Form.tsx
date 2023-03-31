@@ -1,30 +1,33 @@
-import { Box, Typography, FormControl, InputLabel, Input, Button, Checkbox, Container, FormControlLabel, Grid, Link, TextField } from "@mui/material";
-
+import { Box, Typography, Button, Container, TextField } from "@mui/material";
 
 interface FormProps {
   title: string;
-  username: string|null;
+  username: string | null;
   setUsername: (username: string) => void;
-  password: string|null;
+  password: string | null;
   setPassword: (password: string) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
-
-const Form:React.FC<FormProps> = ({title, username, setUsername, password, setPassword, onSubmit}) => {
+const Form: React.FC<FormProps> = ({
+  title,
+  username,
+  setUsername,
+  password,
+  setPassword,
+  onSubmit,
+}) => {
   return (
     <Container component="main" maxWidth="xs">
       <Box
-        sx={{  
+        sx={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Typography variant="h2">
-          {title}
-        </Typography>
+        <Typography variant="h2">{title}</Typography>
         <Box component="form" onSubmit={onSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -58,6 +61,6 @@ const Form:React.FC<FormProps> = ({title, username, setUsername, password, setPa
       </Box>
     </Container>
   );
-}
+};
 
 export default Form;
