@@ -22,6 +22,11 @@ app.use("/recipes", recipesRouter);
 
 // put this after middlewares are applied and before listen
 // process.env is a available globally
-mongoose.connect(process.env.MONGOOSE_URL);
+mongoose.connect(
+  "mongodb+srv://billy:oDPNQInPBEE9oNDb@recipes.ybjez7b.mongodb.net/recipes?retryWrites=true&w=majority"
+);
 
-app.listen(3001, () => console.log("Server is running on port 3001"));
+// for heroku
+app.listen(process.env.PORT || 3001, () =>
+  console.log("Server is running on port 3001")
+);
