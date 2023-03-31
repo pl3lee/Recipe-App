@@ -1,4 +1,4 @@
-import { Box, Typography, FormControl, InputLabel, Input, Button } from "@mui/material";
+import { Box, Typography, FormControl, InputLabel, Input, Button, Checkbox, Container, FormControlLabel, Grid, Link, TextField } from "@mui/material";
 
 
 interface FormProps {
@@ -13,23 +13,51 @@ interface FormProps {
 
 const Form:React.FC<FormProps> = ({title, username, setUsername, password, setPassword, onSubmit}) => {
   return (
-    <Box component="form" autoComplete="off" onSubmit={onSubmit}>
-      <>
-      <Typography variant="h4">{title}</Typography>
-      <FormControl variant="standard">
-        <InputLabel htmlFor="username">Username</InputLabel>
-        <Input id="username" required onChange={(event) => setUsername(event.target.value)}/>
-      </FormControl>
-      <FormControl variant="standard">
-        <InputLabel htmlFor="password">Password</InputLabel>
-        <Input id="password" type="password" required onChange={(event) => setPassword(event.target.value)}/>
-      </FormControl>
-      <Button type="submit" variant="contained" color="primary">
-        {title}
-      </Button>
-      </>
-    </Box>
-  )
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{  
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          {title}
+        </Typography>
+        <Box component="form" onSubmit={onSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoFocus
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            {title}
+          </Button>
+        </Box>
+      </Box>
+    </Container>
+  );
 }
 
 export default Form;

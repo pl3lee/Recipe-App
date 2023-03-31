@@ -27,7 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
   
 
 
-  const login = async (username: string, password: string): Promise<number> => {
+  const login = async (username: string, password: string, remember: boolean): Promise<number> => {
+    console.log(remember)
     const data = { username, password }
     const res = await fetch('http://localhost:3001/auth/login', {
       method: 'POST',
@@ -51,8 +52,10 @@ export default function App({ Component, pageProps }: AppProps) {
       // alert("Successfully logged in")
       // we need to get the token and userID from the response, and set it in the cookies
       const { token, userID } = resData;
-      setCookie("access_token", token)
-      window.localStorage.setItem("userID", userID);
+        setCookie("access_token", token)
+        window.localStorage.setItem("userID", userID);
+      
+      
       setUser(userID)
       return 1;
   }
