@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
 
 // Adds a recipe
 // pass verifyToken middleware right before the callback function
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", async (req, res) => {
   const recipe = new RecipeModel(req.body);
   try {
     const response = await recipe.save();
@@ -30,7 +30,7 @@ router.post("/", verifyToken, async (req, res) => {
 });
 
 // saves a recipe to a userID
-router.put("/", verifyToken, async (req, res) => {
+router.put("/", async (req, res) => {
   try {
     // finds the recipe and user by their IDs
     const recipe = await RecipeModel.findById(req.body.recipeID);
@@ -70,18 +70,14 @@ router.get("/savedRecipes/:userID", async (req, res) => {
 });
 
 // deletes a saved recipe for a user
-router.delete(
-  "/savedRecipes/:userID/:recipeID",
-  verifyToken,
-  async (req, res) => {
-    try {
-      const user = await UserModel.findById(req.params.userID);
-      const response = user.savedRecipes.pull(req.params.recipeID);
-      await user.save();
-      res.json(response);
-    } catch (err) {
-      res.json(err);
-    }
+router.delete("/savedRecipes/:userID/:recipeID", async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.userID);
+    const response = user.savedRecipes.pull(req.params.recipeID);
+    await user.save();
+    res.json(response);
+  } catch (err) {
+    res.json(err);
   }
-);
+});
 export { router as recipesRouter };
