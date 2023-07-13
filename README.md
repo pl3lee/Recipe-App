@@ -19,5 +19,5 @@ The user interface of the application is built using Material UI, and the projec
 
 
 # Deployed Using:
-- Heroku
-- Netlify
+- Fly.io
+- Vercel
