@@ -25,6 +25,6 @@ app.use("/recipes", recipesRouter);
 mongoose.connect(process.env.MONGODB_URI);
 
 // for heroku
-app.listen(process.env.PORT || 8080, () =>
-  console.log("Server is running on port 8080")
+app.listen(process.env.PORT || 3000, () =>
+  console.log("Server is running on port 3000")
 );
