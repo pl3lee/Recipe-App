@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const login = async (username: string, password: string): Promise<number> => {
     const data = { username, password };
-    const res = await fetch("https://recipes17.herokuapp.com/auth/login", {
+    const res = await fetch("https://recipe-app-backend.fly.dev/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -62,7 +62,7 @@ export default function App({ Component, pageProps }: AppProps) {
   };
   const getRecipes = async () => {
     try {
-      const res = await fetch("https://recipes17.herokuapp.com/recipes", {
+      const res = await fetch("https://recipe-app-backend.fly.dev/recipes", {
         method: "GET",
       });
       const resData = await res.json();
@@ -74,7 +74,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const getSavedRecipesID = async () => {
     const res = await fetch(
-      `https://recipes17.herokuapp.com/recipes/savedRecipes/ids/${user}`,
+      `https://recipe-app-backend.fly.dev/recipes/savedRecipes/ids/${user}`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -85,7 +85,7 @@ export default function App({ Component, pageProps }: AppProps) {
   };
   const getSavedRecipes = async () => {
     const res = await fetch(
-      `https://recipes17.herokuapp.com/recipes/savedRecipes/${user}`,
+      `https://recipe-app-backend.fly.dev/recipes/savedRecipes/${user}`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -105,7 +105,7 @@ export default function App({ Component, pageProps }: AppProps) {
     try {
       if (savedRecipesID.includes(recipeID)) {
         const res = await fetch(
-          `https://recipes17.herokuapp.com/recipes/savedRecipes/${user}/${recipeID}`,
+          `https://recipe-app-backend.fly.dev/recipes/savedRecipes/${user}/${recipeID}`,
           {
             method: "DELETE",
             headers: {
@@ -115,7 +115,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         );
       } else {
-        const res = await fetch("https://recipes17.herokuapp.com/recipes", {
+        const res = await fetch("https://recipe-app-backend.fly.dev/recipes", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

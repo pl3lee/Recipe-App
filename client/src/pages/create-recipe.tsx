@@ -68,7 +68,7 @@ const CreateRecipe = (props: CreateRecipeProps) => {
     setRecipe(newRecipe);
 
     try {
-      const res = await fetch("https://recipes17.herokuapp.com/recipes", {
+      const res = await fetch("https://recipe-app-backend.fly.dev/recipes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

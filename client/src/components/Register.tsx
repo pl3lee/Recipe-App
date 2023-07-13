@@ -8,11 +8,14 @@ const Register: React.FC = () => {
     event.preventDefault();
 
     const data = { username, password };
-    const res = await fetch("https://recipes17.herokuapp.com/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      "https://recipe-app-backend.fly.dev/auth/register",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
 
     if (!res.ok) {
       alert("Something went wrong");
